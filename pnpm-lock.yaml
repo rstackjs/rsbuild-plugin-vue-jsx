@@ -29,10 +29,10 @@ importers:
         version: 1.7.3
       '@rsbuild/plugin-vue':
         specifier: 1.2.7
-        version: 1.2.7(@rsbuild/core@1.7.3)(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(vue@3.5.30(typescript@5.9.3))
+        version: 1.2.7(@rsbuild/core@1.7.3)(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(vue@3.5.30(typescript@6.0.2))
       '@rslib/core':
         specifier: ^0.20.0
-        version: 0.20.0(core-js@3.47.0)(typescript@5.9.3)
+        version: 0.20.0(core-js@3.47.0)(typescript@6.0.2)
       '@types/node':
         specifier: ^24.12.0
         version: 24.12.0
@@ -46,11 +46,11 @@ importers:
         specifier: ^2.13.1
         version: 2.13.1
       typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
+        specifier: ^6.0.2
+        version: 6.0.2
       vue:
         specifier: ^3.5.30
-        version: 3.5.30(typescript@5.9.3)
+        version: 3.5.30(typescript@6.0.2)
 
   playground: {}
 
@@ -1013,8 +1013,8 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+  typescript@6.0.2:
+    resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -1622,9 +1622,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rsbuild/plugin-vue@1.2.7(@rsbuild/core@1.7.3)(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(vue@3.5.30(typescript@5.9.3))':
+  '@rsbuild/plugin-vue@1.2.7(@rsbuild/core@1.7.3)(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(vue@3.5.30(typescript@6.0.2))':
     dependencies:
-      rspack-vue-loader: 17.5.0(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(vue@3.5.30(typescript@5.9.3))
+      rspack-vue-loader: 17.5.0(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(vue@3.5.30(typescript@6.0.2))
     optionalDependencies:
       '@rsbuild/core': 1.7.3
     transitivePeerDependencies:
@@ -1632,12 +1632,12 @@ snapshots:
       - '@vue/compiler-sfc'
       - vue
 
-  '@rslib/core@0.20.0(core-js@3.47.0)(typescript@5.9.3)':
+  '@rslib/core@0.20.0(core-js@3.47.0)(typescript@6.0.2)':
     dependencies:
       '@rsbuild/core': 2.0.0-beta.8(core-js@3.47.0)
-      rsbuild-plugin-dts: 0.20.0(@rsbuild/core@2.0.0-beta.8(core-js@3.47.0))(typescript@5.9.3)
+      rsbuild-plugin-dts: 0.20.0(@rsbuild/core@2.0.0-beta.8(core-js@3.47.0))(typescript@6.0.2)
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 6.0.2
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
       - '@typescript/native-preview'
@@ -1915,11 +1915,11 @@ snapshots:
       '@vue/shared': 3.5.30
       csstype: 3.2.3
 
-  '@vue/server-renderer@3.5.30(vue@3.5.30(typescript@5.9.3))':
+  '@vue/server-renderer@3.5.30(vue@3.5.30(typescript@6.0.2))':
     dependencies:
       '@vue/compiler-ssr': 3.5.30
       '@vue/shared': 3.5.30
-      vue: 3.5.30(typescript@5.9.3)
+      vue: 3.5.30(typescript@6.0.2)
 
   '@vue/shared@3.5.21': {}
 
@@ -2075,20 +2075,20 @@ snapshots:
 
   reduce-configs@1.1.1: {}
 
-  rsbuild-plugin-dts@0.20.0(@rsbuild/core@2.0.0-beta.8(core-js@3.47.0))(typescript@5.9.3):
+  rsbuild-plugin-dts@0.20.0(@rsbuild/core@2.0.0-beta.8(core-js@3.47.0))(typescript@6.0.2):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.0.0-beta.8(core-js@3.47.0)
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 6.0.2
 
-  rspack-vue-loader@17.5.0(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(vue@3.5.30(typescript@5.9.3)):
+  rspack-vue-loader@17.5.0(@rspack/core@2.0.0-beta.6(@swc/helpers@0.5.19))(vue@3.5.30(typescript@6.0.2)):
     dependencies:
       '@rspack/lite-tapable': 1.1.0
       chalk: 4.1.2
     optionalDependencies:
       '@rspack/core': 2.0.0-beta.6(@swc/helpers@0.5.19)
-      vue: 3.5.30(typescript@5.9.3)
+      vue: 3.5.30(typescript@6.0.2)
 
   semver@6.3.1: {}
 
@@ -2108,7 +2108,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  typescript@5.9.3: {}
+  typescript@6.0.2: {}
 
   undici-types@7.16.0: {}
 
@@ -2124,14 +2124,14 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  vue@3.5.30(typescript@5.9.3):
+  vue@3.5.30(typescript@6.0.2):
     dependencies:
       '@vue/compiler-dom': 3.5.30
       '@vue/compiler-sfc': 3.5.30
       '@vue/runtime-dom': 3.5.30
-      '@vue/server-renderer': 3.5.30(vue@3.5.30(typescript@5.9.3))
+      '@vue/server-renderer': 3.5.30(vue@3.5.30(typescript@6.0.2))
       '@vue/shared': 3.5.30
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 6.0.2
 
   yallist@3.1.1: {}
