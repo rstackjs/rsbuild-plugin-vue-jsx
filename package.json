@@ -17,19 +17,14 @@
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w",
-    "lint": "biome check .",
-    "lint:write": "biome check . --write",
+    "lint": "rslint && prettier -c .",
+    "lint:write": "rslint --fix && prettier -w .",
     "prepare": "simple-git-hooks && npm run build",
     "test": "playwright test",
     "bump": "npx bumpp"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx nano-staged"
-  },
-  "nano-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "biome check --write --no-errors-on-unmatched"
-    ]
+    "pre-commit": "npm run lint:write"
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "^1.1.2",
@@ -37,14 +32,14 @@
     "babel-plugin-vue-jsx-hmr": "^1.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
     "@playwright/test": "^1.59.1",
     "@rsbuild/core": "^1.7.5",
     "@rsbuild/plugin-vue": "1.2.7",
     "@rslib/core": "^0.20.3",
+    "@rslint/core": "^0.3.4",
     "@types/node": "^24.12.2",
-    "nano-staged": "^0.9.0",
     "playwright": "^1.59.1",
+    "prettier": "^3.8.1",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^6.0.2",
     "vue": "^3.5.32"
