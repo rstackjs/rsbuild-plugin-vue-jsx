@@ -24,13 +24,7 @@
     "bump": "npx bumpp"
   },
   "simple-git-hooks": {
-    "pre-commit": "./node_modules/.bin/nano-staged"
-  },
-  "nano-staged": {
-    "*": [
-      "rslint",
-      "prettier -w"
-    ]
+    "pre-commit": "pnpm run lint:write"
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "^1.1.2",
@@ -44,7 +38,6 @@
     "@rslib/core": "^0.20.3",
     "@rslint/core": "^0.3.4",
     "@types/node": "^24.12.2",
-    "nano-staged": "^0.9.0",
     "playwright": "^1.59.1",
     "prettier": "^3.8.1",
     "simple-git-hooks": "^2.13.1",
