@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { type Page, expect, test } from '@playwright/test';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
+import { expect, test } from '@rstest/playwright';
+import { chromium, type Browser, type Page } from 'playwright';
 import { getRandomPort } from '../helper';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -69,18 +70,19 @@ test('should update', async ({ page }) => {
   await server.close();
 });
 
-test.describe('vue jsx hmr', () => {
-  // HMR cases will fail in Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
+// HMR cases will fail in Windows
+const describeHmr =
+  process.platform === 'win32' ? test.describe.skip : test.describe;
 
+describeHmr('vue jsx hmr', () => {
   let server: {
     close: () => Promise<void>;
   };
+  let browser: Browser;
   let page: Page;
 
-  test.beforeAll(async ({ browser }) => {
+  test.beforeAll(async () => {
+    browser = await chromium.launch();
     page = await browser.newPage();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -116,6 +118,8 @@ test.describe('vue jsx hmr', () => {
       code.replace('let count = ref(1000)', 'let count = ref(100)'),
     );
 
+    await page.close();
+    await browser.close();
     await server.close();
   });
 
