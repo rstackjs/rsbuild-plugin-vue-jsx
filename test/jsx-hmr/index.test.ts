@@ -70,11 +70,7 @@ test('should update', async ({ page }) => {
   await server.close();
 });
 
-// HMR cases will fail in Windows
-const describeHmr =
-  process.platform === 'win32' ? test.describe.skip : test.describe;
-
-describeHmr('vue jsx hmr', () => {
+test.describe('vue jsx hmr', () => {
   let server: {
     close: () => Promise<void>;
   };
