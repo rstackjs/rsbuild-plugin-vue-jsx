@@ -4,7 +4,7 @@ import { createRsbuild, loadConfig } from '@rsbuild/core';
 import { expect, test } from '@rstest/playwright';
 import { editFile as editSharedFile, waitFor } from '@rstackjs/test-utils';
 import { chromium, type Browser, type Page } from 'playwright';
-import { getRandomPort } from '../helper';
+import { getRandomPort } from '@rstackjs/test-utils';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
