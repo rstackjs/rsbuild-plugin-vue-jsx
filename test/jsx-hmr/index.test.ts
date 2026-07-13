@@ -1,8 +1,8 @@
-import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 import { expect, test } from '@rstest/playwright';
+import { editFile as editSharedFile, waitFor } from '@rstackjs/test-utils';
 import { chromium, type Browser, type Page } from 'playwright';
 import { getRandomPort } from '../helper';
 
@@ -14,7 +14,7 @@ test('should render', async ({ page }) => {
     rsbuildConfig: {
       ...(await loadConfig({ cwd: __dirname })).content,
       server: {
-        port: getRandomPort(),
+        port: await getRandomPort(),
       },
     },
   });
@@ -41,7 +41,7 @@ test('should update', async ({ page }) => {
     rsbuildConfig: {
       ...(await loadConfig({ cwd: __dirname })).content,
       server: {
-        port: getRandomPort(),
+        port: await getRandomPort(),
       },
     },
   });
@@ -85,7 +85,7 @@ test.describe('vue jsx hmr', () => {
       rsbuildConfig: {
         ...(await loadConfig({ cwd: __dirname })).content,
         server: {
-          port: getRandomPort(),
+          port: await getRandomPort(),
         },
       },
     });
@@ -98,19 +98,19 @@ test.describe('vue jsx hmr', () => {
 
   test.afterAll(async () => {
     // reset files
-    editFile('Comps.jsx', (code) =>
+    await editFile('Comps.jsx', (code) =>
       code.replace('named updated {count', 'named {count'),
     );
-    editFile('Comps.jsx', (code) =>
+    await editFile('Comps.jsx', (code) =>
       code.replace('named specifier updated {count', 'named specifier {count'),
     );
-    editFile('Comps.jsx', (code) =>
+    await editFile('Comps.jsx', (code) =>
       code.replace('default updated {count', 'default {count'),
     );
-    editFile('Comp.tsx', (code) =>
+    await editFile('Comp.tsx', (code) =>
       code.replace('default tsx updated {count', 'default tsx {count'),
     );
-    editFile('setup-syntax-jsx.vue', (code) =>
+    await editFile('setup-syntax-jsx.vue', (code) =>
       code.replace('let count = ref(1000)', 'let count = ref(100)'),
     );
 
@@ -131,7 +131,7 @@ test.describe('vue jsx hmr', () => {
     await page.locator('.default-tsx').click();
     await expect(page.locator('.default-tsx')).toHaveText('default tsx 4');
 
-    editFile('Comps.jsx', (code) =>
+    await editFile('Comps.jsx', (code) =>
       code.replace('named {count', 'named updated {count'),
     );
     await untilUpdated(() => page.textContent('.named'), 'named updated 0');
@@ -146,7 +146,7 @@ test.describe('vue jsx hmr', () => {
   });
 
   test('hmr: named export via specifier', async () => {
-    editFile('Comps.jsx', (code) =>
+    await editFile('Comps.jsx', (code) =>
       code.replace('named specifier {count', 'named specifier updated {count'),
     );
     await untilUpdated(
@@ -161,7 +161,7 @@ test.describe('vue jsx hmr', () => {
   });
 
   test('hmr: default export', async () => {
-    editFile('Comps.jsx', (code) =>
+    await editFile('Comps.jsx', (code) =>
       code.replace('default {count', 'default updated {count'),
     );
     await untilUpdated(() => page.textContent('.default'), 'default updated 2');
@@ -174,7 +174,7 @@ test.describe('vue jsx hmr', () => {
     await page.locator('.named').click();
     await expect(page.locator('.named')).toHaveText('named updated 1');
 
-    editFile('Comp.tsx', (code) =>
+    await editFile('Comp.tsx', (code) =>
       code.replace('default tsx {count', 'default tsx updated {count'),
     );
     await untilUpdated(
@@ -192,14 +192,14 @@ test.describe('vue jsx hmr', () => {
     await page.locator('.script').click();
     await expect(page.locator('.script')).toHaveText('script 5');
 
-    editFile('Script.vue', (code) =>
+    await editFile('Script.vue', (code) =>
       code.replace('script {count', 'script updated {count'),
     );
 
     await untilUpdated(() => page.textContent('.script'), 'script updated 4');
 
     // reset code
-    editFile('Script.vue', (code) =>
+    await editFile('Script.vue', (code) =>
       code.replace('script updated {count', 'script {count'),
     );
   });
@@ -209,7 +209,7 @@ test.describe('vue jsx hmr', () => {
     await page.locator('.src-import').click();
     await expect(page.locator('.src-import')).toHaveText('src import 6');
 
-    editFile('Script.vue', (code) =>
+    await editFile('Script.vue', (code) =>
       code.replace('script {count', 'script updated {count'),
     );
     await untilUpdated(() => page.textContent('.script'), 'script updated 4');
@@ -217,7 +217,7 @@ test.describe('vue jsx hmr', () => {
     await expect(page.locator('.src-import')).toHaveText('src import 6');
 
     // reset code
-    editFile('Script.vue', (code) =>
+    await editFile('Script.vue', (code) =>
       code.replace('script updated {count', 'script {count'),
     );
   });
@@ -227,7 +227,7 @@ test.describe('vue jsx hmr', () => {
     await page.locator('.script').click();
     await expect(page.locator('.script')).toHaveText('script 5');
 
-    editFile('SrcImport.jsx', (code) =>
+    await editFile('SrcImport.jsx', (code) =>
       code.replace('src import {count', 'src import updated {count'),
     );
 
@@ -239,13 +239,13 @@ test.describe('vue jsx hmr', () => {
     await expect(page.locator('.script')).toHaveText('script 5');
 
     // reset code
-    editFile('SrcImport.jsx', (code) =>
+    await editFile('SrcImport.jsx', (code) =>
       code.replace('src import updated {count', 'src import {count'),
     );
   });
 
   test('hmr: setup jsx in .vue', async () => {
-    editFile('setup-syntax-jsx.vue', (code) =>
+    await editFile('setup-syntax-jsx.vue', (code) =>
       code.replace('let count = ref(100)', 'let count = ref(1000)'),
     );
 
@@ -253,27 +253,25 @@ test.describe('vue jsx hmr', () => {
   });
 });
 
-function editFile(filename: string, replacer: (str: string) => string): void {
+function editFile(
+  filename: string,
+  replacer: (str: string) => string,
+): Promise<void> {
   const fileName = path.join(__dirname, 'src', filename);
-  const content = fs.readFileSync(fileName, 'utf-8');
-  const modified = replacer(content);
-  fs.writeFileSync(fileName, modified);
+  return editSharedFile(fileName, replacer);
 }
-
-const timeout = (n: number) => new Promise((r) => setTimeout(r, n));
 
 async function untilUpdated(
   poll: () => Promise<string | null>,
   expected: string,
 ): Promise<void> {
-  const maxTries = 50;
-  for (let tries = 0; tries < maxTries; tries++) {
-    const actual = (await poll()) ?? '';
-    if (actual.indexOf(expected) > -1 || tries === maxTries - 1) {
-      expect(actual).toMatch(expected);
-      break;
-    }
-
-    await timeout(50);
-  }
+  let actual = '';
+  await waitFor(
+    async () => {
+      actual = (await poll()) ?? '';
+      return actual.includes(expected);
+    },
+    { interval: 50, timeout: 2500 },
+  );
+  expect(actual).toMatch(expected);
 }
