@@ -36,7 +36,7 @@
   "devDependencies": {
     "@rsbuild/core": "^2.2.1",
     "@rsbuild/plugin-vue": "2.0.1",
-    "@rstackjs/test-utils": "^0.2.0",
+    "@rstackjs/test-utils": "^1.0.0",
     "@rstest/playwright": "^0.11.11",
     "@types/node": "^24.13.3",
     "playwright": "^1.62.1",
