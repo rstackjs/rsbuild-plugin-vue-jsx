@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "^2.1.0",
-    "@vue/babel-plugin-jsx": "^2.0.1",
+    "@vue/babel-plugin-jsx": "^3.0.0",
     "babel-plugin-vue-jsx-hmr": "^1.0.2"
   },
   "devDependencies": {
